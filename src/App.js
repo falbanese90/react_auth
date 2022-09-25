@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Outlet, Link } from 'react-router-dom';
+import Footer from './components/Footer';
+import NavBar from './components/Nav';
+import './css/App.css';
+import { useContext } from 'react';
+import AuthContext from './context/AuthProvider';
+
 
 function App() {
+
+  const { auth } = useContext(AuthContext);
+  console.log(auth);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar />
+      <h1 style={{textAlign: 'center', paddingTop: '20px'}}>Hello World</h1>
+      <div style={{height: '800px', textAlign: 'center'}}>
+        <Outlet />
+      </div>
+      <Footer />
+    </>
   );
 }
 
