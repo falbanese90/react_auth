@@ -1,18 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import About from './components/About';
-import Something from './components/Something';
 import Login from './components/Login';
 import RequireAuth from './components/RequireAuth';
-import Admin from './components/Admin';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthProvider';
 import './index.css';
-import Unauthorized from './components/Unauthorized';
 import Register from './components/Register';
-import Home from './components/Home';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />
+        element: <Login />
       },
       {
         path: '/login',
@@ -35,14 +30,6 @@ const router = createBrowserRouter([
         path: '/',
         element: <RequireAuth allowedRoles={['has_role']} />,
         children: [
-          {
-            path: '/admin',
-            element: <Admin />
-          },
-          {
-            path: '/about',
-            element: <About />
-          }
         ]
       }
     ]

@@ -1,5 +1,4 @@
 import { Outlet, Link } from 'react-router-dom';
-import Footer from './components/Footer';
 import NavBar from './components/Nav';
 import './css/App.css';
 import { useContext } from 'react';
@@ -14,11 +13,10 @@ function App() {
   return (
     <>
       <NavBar />
-      <h1 style={{textAlign: 'center', paddingTop: '20px'}}>Hello World</h1>
+      <h1 style={{textAlign: 'center', paddingTop: '20px'}}>Babylon Boxing</h1>
       <div style={{height: '800px', textAlign: 'center'}}>
         <Outlet />
       </div>
-      <Footer />
     </>
   );
 }

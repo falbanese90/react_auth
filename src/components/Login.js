@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
 import '../css/Login.css'
+import useAuth from '../hooks/useAuth';
+import { decodeToken } from 'react-jwt';
 
 const LOGIN_URL = '/users/athenticate'
 
@@ -27,12 +29,17 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://0.0.0.0:4000/users/authenticate', JSON.stringify({ username: usr, password: pwd }), {
+            const response = await axios.post('http://0.0.0.0:3000/members/auth', JSON.stringify({ email: usr, password: pwd }), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            console.log(JSON.stringify(response?.data))
-            const accessToken = response?.data
-            setAuth({ accessToken, roles: ['has_role'] });
+            console.log(JSON.stringify(response?.data));
+            const accessToken = response?.data;
+            if (accessToken == 'Unauthorized') {
+                setAuth({ accessToken, roles: [] })
+            } else {
+                const current = decodeToken(accessToken, 'TOKEN');
+                setAuth({ accessToken, roles: current });
+            }
             setUser('');
             setPwd('');
         } catch (err) {
@@ -54,7 +61,7 @@ const Login = () => {
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Sign in</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
+                <label htmlFor="username">Email:</label>
                 <input type="text"
                 id="username"
                 ref={userRef}
